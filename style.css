@@ -21,8 +21,8 @@
 body {
   display: grid;
   grid-template-columns: 4fr 1fr;
-  background-image: url(images/ai-generated-8820543_1920.png);
-  background-repeat: no-repeat;
+  background-image: url(images/lightning-5039182_1920.jpg);
+  /*background-repeat: no-repeat;*/
   background-size: 100% 100vh;
 }
 .sidebar {
@@ -61,6 +61,7 @@ body {
   align-content: center;
   justify-content: center;
   padding: 20px;
+  height: auto;
 }
 .txtImg {
   padding: 40px;
@@ -84,6 +85,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: scroll;
+
+  max-height: 750px;
 }
 .daysBtn {
   display: flex;
@@ -108,6 +112,7 @@ body {
   gap: 25px;
   margin-top: 45px;
   font-size: 25px;
+  cursor: pointer;
 }
 .sidebarImg {
   background-color: rgba(255, 255, 255, 0.103);
@@ -135,14 +140,24 @@ body {
   display: grid;
   grid-template-rows: 1fr 3fr 1fr 1fr;
 }
-
+.dateTime {
+  display: flex;
+  align-items: start;
+}
 .leftSctTime {
-  height: 35px;
-  justify-content: end;
+  height: auto;
+  justify-content: space-between;
+  align-content: center;
   display: flex;
   gap: 20px;
-  font-size: 30px;
+  font-size: 35px;
   padding: 40px;
+  flex-wrap: wrap;
+}
+.leftCity {
+  justify-self: start;
+  font-size: 60px;
+  font-weight: bolder;
 }
 .leftTime {
   border-left: solid 2px rgba(255, 255, 255, 0.26);
@@ -152,12 +167,17 @@ body {
 .leftSctCondition {
   padding: 40px;
   display: flex;
+  flex-direction: column;
   grid-row: 3/4;
   justify-content: end;
   align-items: end;
-  font-size: 100px;
+  font-size: 75px;
 }
 .leftCondition {
+  color: rgba(255, 255, 255, 0.897);
+}
+.leftDescritpion {
+  font-size: 24px;
   color: rgba(255, 255, 255, 0.815);
 }
 .leftSctHour {
@@ -168,6 +188,7 @@ body {
   margin-left: 40px;
   margin-right: 40px;
   border-top: solid 2px rgba(255, 255, 255, 0.26);
+  overflow-x: scroll;
 }
 .cardHour {
   display: flex;
@@ -176,10 +197,11 @@ body {
   justify-content: center;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.11);
-  width: 100px;
+  width: 120px;
   height: 160px;
   gap: 10px;
 }
+
 .timeHourSct {
   font-size: 25px;
   border-bottom: solid 2px rgba(255, 255, 255, 0.26);
