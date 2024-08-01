@@ -72,8 +72,14 @@ function UpdateWeatherUI(weatherData) {
   if (dataDateTime !== dataDay) {
     leftTime.textContent = dataDateTime;
   }
+
   const leftDate = document.querySelector(".leftDate");
-  leftDate.textContent = dataDay;
+  const dateObject = new Date(dataDay);
+  const optionsEnglishGB = { day: "2-digit", month: "long", year: "numeric" };
+  leftDate.textContent = dateObject.toLocaleDateString(
+    "en-GB",
+    optionsEnglishGB
+  );
 
   const leftCondition = document.querySelector(".leftCondition");
   leftCondition.textContent = dataCondition;
@@ -117,7 +123,6 @@ function UpdateWeatherUI(weatherData) {
 
   createNextDays(5);
 
-  //Add event Listener to 5/10/15 Days button
   const forecastBtns = document.querySelectorAll(".nextDaysBtn");
 
   forecastBtns.forEach((btn) => {
@@ -142,10 +147,20 @@ function UpdateWeatherUI(weatherData) {
       imgElement.className = "sidebarImg";
 
       const infoDiv = document.createElement("div");
+      infoDiv.className = "dateConditionCard";
 
       const dateP = document.createElement("p");
       dateP.className = "date";
-      dateP.textContent = arrayDaysData[i].datetime;
+      const dateObject = new Date(arrayDaysData[i].datetime);
+      const optionsEnglishGB = {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      };
+      dateP.textContent = dateObject.toLocaleDateString(
+        "en-GB",
+        optionsEnglishGB
+      );
 
       const conditionP = document.createElement("p");
       conditionP.className = "condition";
@@ -175,8 +190,11 @@ function UpdateWeatherUI(weatherData) {
       otherDaysCards.appendChild(cardDiv);
 
       cardDiv.addEventListener("click", () => {
+        const preFormattedDate = new Date(dateP.textContent)
+          .toISOString()
+          .split("T")[0];
         const index = weatherData.days.findIndex(
-          (day) => day.datetime === dateP.textContent
+          (day) => day.datetime === preFormattedDate
         );
 
         leftSctHour.innerHTML = "";
