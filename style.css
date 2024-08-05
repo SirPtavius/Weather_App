@@ -3,6 +3,7 @@
   padding: 0;
   color: white;
 }
+
 :root {
   --background-color: transparent;
   --backdrop-filter: blur(15px);
@@ -21,8 +22,7 @@
 body {
   display: grid;
   grid-template-columns: 4fr 1.2fr;
-  background-image: url(images/lightning-5039182_1920.jpg);
-  background-size: 100% 100vh;
+  background-image: url(images/backgroudn.jpg);
 }
 .sidebar {
   width: 100%;
