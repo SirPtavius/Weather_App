@@ -22,7 +22,6 @@ body {
   display: grid;
   grid-template-columns: 4fr 1.2fr;
   background-image: url(images/lightning-5039182_1920.jpg);
-  /*background-repeat: no-repeat;*/
   background-size: 100% 100vh;
 }
 .sidebar {
@@ -86,7 +85,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 
   max-height: 750px;
@@ -193,7 +192,7 @@ body {
   margin-left: 40px;
   margin-right: 40px;
   border-top: solid 2px rgba(255, 255, 255, 0.26);
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .cardHour {
   display: flex;
@@ -213,4 +212,7 @@ body {
 }
 .temperaturehourSct {
   font-size: 30px;
+}
+.invertColor {
+  filter: invert(100%);
 }

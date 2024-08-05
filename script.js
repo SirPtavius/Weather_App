@@ -33,12 +33,16 @@ async function getWeatherReport(location) {
     console.error(e.message);
   }
 
+  const dataCity = weatherData.resolvedAddress;
+  const leftCity = document.querySelector(".leftCity");
+  if (dataCity !== undefined) {
+    leftCity.textContent = dataCity;
+  }
+
   UpdateWeatherUI(weatherData);
 }
 
 function UpdateWeatherUI(weatherData) {
-  const dataCity = weatherData.resolvedAddress;
-
   const dataCondition =
     (weatherData.currentConditions &&
       weatherData.currentConditions.conditions) ||
@@ -56,11 +60,6 @@ function UpdateWeatherUI(weatherData) {
   const dataDay =
     (weatherData.days && weatherData.days[0].datetime) || weatherData.datetime;
   const dataDescription = weatherData.description;
-
-  const leftCity = document.querySelector(".leftCity");
-  if (dataCity !== undefined) {
-    leftCity.textContent = dataCity;
-  }
 
   const leftTemp = document.querySelector("#temperature");
   leftTemp.textContent = dataTemp + "°C";
@@ -93,8 +92,8 @@ function UpdateWeatherUI(weatherData) {
 
   const arrayHourData =
     (weatherData.days && weatherData.days[0].hours) || weatherData.hours;
-
   leftSctHour.innerHTML = "";
+
   arrayHourData.forEach((hours, hour) => {
     const cardHourDiv = document.createElement("div");
     cardHourDiv.className = "cardHour";
@@ -106,9 +105,30 @@ function UpdateWeatherUI(weatherData) {
 
     const imgElement = document.createElement("img");
 
-    imgElement.src = `images/icon/${dataCondition}.png`;
-    imgElement.alt = `${dataCondition}`;
-    imgElement.className = "sidebarImg";
+    const sunset =
+      (weatherData.currentConditions &&
+        weatherData.currentConditions.sunset.slice(0, -6)) ||
+      weatherData.sunset.slice(0, -6);
+    const sunrise =
+      (weatherData.currentConditions &&
+        weatherData.currentConditions.sunrise.slice(0, -6)) ||
+      weatherData.sunrise.slice(0, -6);
+
+    if (
+      hours.datetime.slice(0, -6) < sunrise ||
+      hours.datetime.slice(0, -6) > sunset
+    ) {
+      imgElement.src = `images/icon/${"moon" + dataCondition}.png`;
+      imgElement.alt = `${"moon" + dataCondition}`;
+      imgElement.className = "sidebarImg";
+      if ("moon" + dataCondition === "moonRain, Partially cloudy") {
+        imgElement.classList.add("invertColor");
+      }
+    } else {
+      imgElement.src = `images/icon/${dataCondition}.png`;
+      imgElement.alt = `${dataCondition}`;
+      imgElement.className = "sidebarImg";
+    }
 
     const tempHourP = document.createElement("p");
     tempHourP.className = "temperaturehourSct";
@@ -133,10 +153,15 @@ function UpdateWeatherUI(weatherData) {
 
   //Create Next Days Cards
   function createNextDays(NDay) {
+    if (weatherData.days === undefined) {
+      return;
+    }
     const arrayDaysData = weatherData.days;
 
     const otherDaysCards = document.querySelector(".otherDaysCards");
+
     otherDaysCards.innerHTML = "";
+
     for (let i = 0; i < NDay; i++) {
       const cardDiv = document.createElement("div");
       cardDiv.className = "card";
@@ -198,7 +223,8 @@ function UpdateWeatherUI(weatherData) {
         );
 
         leftSctHour.innerHTML = "";
-        UpdateWeatherUI(weatherData.days[index]);
+
+        UpdateWeatherUI(weatherData.days[index + 1]);
       });
     }
   }
